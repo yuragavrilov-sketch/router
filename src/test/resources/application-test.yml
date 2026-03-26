@@ -1,0 +1,63 @@
+sbp-router:
+  extraction-rules:
+    ReqAuthPay:
+      routing-fields:
+        - name: terminalName
+          parent: PayProfile
+          key: Tran.TermName
+        - name: rcvTspId
+          parent: PayProfile
+          key: RcvTSPId
+        - name: sbpOperation
+          parent: PayProfile
+          key: SbpOperation
+        - name: sbpOperType
+          parent: PayProfile
+          key: SbpOperType
+      extra-fields:
+        - name: senderAccount
+          parent: PayProfile
+          key: SndAccountNum
+        - name: amount
+          path: /Document/GCSvc/Payment/ReqAuthPay/Funds/Amount
+    ReqNoticePay:
+      routing-fields:
+        - name: terminalName
+          parent: AdditionInfo
+          key: Tran.TermName
+        - name: rcvTspId
+          parent: AdditionInfo
+          key: RcvTSPId
+        - name: sbpOperation
+          parent: AdditionInfo
+          key: SbpOperation
+        - name: state
+          path: /Document/GCSvc/Payment/ReqNoticePay/State
+      extra-fields:
+        - name: bankOperId
+          path: /Document/GCSvc/Payment/ReqNoticePay/BankOperId
+
+  terminals:
+    c2b-terminal:
+      field-name: rcvTspId
+    b2c-terminal:
+      field-name: terminalName
+      tkb-pay-prefix: "Pay"
+    tkb-pay-list:
+      - MB0000700543
+      - MB0000004185
+
+  routing:
+    tkb-pay-enabled: false
+
+  upstreams:
+    infosrv:
+      url: http://localhost:9999/api/gcsvc
+      timeout: 5s
+      retry:
+        max-attempts: 1
+        backoff: 100ms
+    stub-verification:
+      url: http://localhost:${server.port}/stub/verification
+    stub-connector:
+      url: http://localhost:${server.port}/stub/connector
