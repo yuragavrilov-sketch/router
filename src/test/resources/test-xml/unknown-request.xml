@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Document stan="test-unknown-001">
+    <GCSvc version="1">
+        <Payment>
+            <ReqStatusPay>
+                <SenderId>status-001</SenderId>
+            </ReqStatusPay>
+        </Payment>
+    </GCSvc>
+</Document>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Document stan="test-b2c-cancel-001">
+    <GCSvc version="1">
+        <Payment>
+            <ReqNoticePay>
+                <SenderId>b2cTr-wp-5979</SenderId>
+                <BankOperId></BankOperId>
+                <State>-1</State>
+                <AdditionInfo>
+                    <PNameID>Tran.TermName</PNameID>
+                    <PValue>PayTerminal01</PValue>
+                </AdditionInfo>
+                <AdditionInfo>
+                    <PNameID>SbpOperation</PNameID>
+                    <PValue>B2COther_Snd</PValue>
+                </AdditionInfo>
+                <AdditionInfo>
+                    <PNameID>SbpOperType</PNameID>
+                    <PValue>B2C</PValue>
+                </AdditionInfo>
+            </ReqNoticePay>
+        </Payment>
+    </GCSvc>
+</Document>

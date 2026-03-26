@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Document stan="test-c2b-notice-001">
+    <GCSvc version="1">
+        <Payment>
+            <ReqNoticePay>
+                <SenderId>B5169130048281010000120011530503</SenderId>
+                <BankOperId></BankOperId>
+                <State>0</State>
+                <AdditionInfo>
+                    <PNameID>Tran.TermName</PNameID>
+                    <PValue>SB01133</PValue>
+                </AdditionInfo>
+                <AdditionInfo>
+                    <PNameID>RcvTSPId</PNameID>
+                    <PValue>MB0000700543</PValue>
+                </AdditionInfo>
+                <AdditionInfo>
+                    <PNameID>SbpOperation</PNameID>
+                    <PValue>C2BQRD_Rcv</PValue>
+                </AdditionInfo>
+                <AdditionInfo>
+                    <PNameID>SbpOperType</PNameID>
+                    <PValue>C2BQRD</PValue>
+                </AdditionInfo>
+                <Funds>
+                    <Amount>29201</Amount>
+                    <Cur>810</Cur>
+                </Funds>
+            </ReqNoticePay>
+        </Payment>
+    </GCSvc>
+</Document>

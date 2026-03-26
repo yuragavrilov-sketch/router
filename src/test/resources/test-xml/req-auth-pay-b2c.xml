@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Document stan="test-b2c-auth-001">
+    <GCSvc version="1">
+        <Payment>
+            <ReqAuthPay>
+                <SenderId>b2cTr-wp-5979</SenderId>
+                <PayType>PayFromAccount</PayType>
+                <ReqType>ReqPay</ReqType>
+                <PayProfile>
+                    <PNameID>Tran.TermName</PNameID>
+                    <PValue>PayTerminal01</PValue>
+                </PayProfile>
+                <PayProfile>
+                    <PNameID>SbpOperation</PNameID>
+                    <PValue>B2COther_Snd</PValue>
+                </PayProfile>
+                <PayProfile>
+                    <PNameID>SbpOperType</PNameID>
+                    <PValue>B2C</PValue>
+                </PayProfile>
+                <PayProfile>
+                    <PNameID>SndAccountNum</PNameID>
+                    <PValue>40702810820100004437</PValue>
+                </PayProfile>
+                <Funds>
+                    <Amount>15787</Amount>
+                    <Cur>810</Cur>
+                </Funds>
+            </ReqAuthPay>
+        </Payment>
+    </GCSvc>
+</Document>

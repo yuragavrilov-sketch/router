@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Document stan="test-b2c-notice-001">
+    <GCSvc version="1">
+        <Payment>
+            <ReqNoticePay>
+                <SenderId>b2cTr-wp-5979</SenderId>
+                <BankOperId>671920591533</BankOperId>
+                <State>0</State>
+                <AdditionInfo>
+                    <PNameID>Tran.TermName</PNameID>
+                    <PValue>PayTerminal01</PValue>
+                </AdditionInfo>
+                <AdditionInfo>
+                    <PNameID>SbpOperation</PNameID>
+                    <PValue>B2COther_Snd</PValue>
+                </AdditionInfo>
+                <AdditionInfo>
+                    <PNameID>SbpOperType</PNameID>
+                    <PValue>B2C</PValue>
+                </AdditionInfo>
+                <Funds>
+                    <Amount>15787</Amount>
+                    <Cur>810</Cur>
+                </Funds>
+            </ReqNoticePay>
+        </Payment>
+    </GCSvc>
+</Document>

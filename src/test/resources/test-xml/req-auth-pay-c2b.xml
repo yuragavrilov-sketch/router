@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Document stan="test-c2b-auth-001">
+    <GCSvc version="1">
+        <Payment>
+            <ReqAuthPay>
+                <SenderId>c2b-001</SenderId>
+                <PayType>PayToAccount</PayType>
+                <ReqType>ReqPay</ReqType>
+                <PayProfile>
+                    <PNameID>Tran.TermName</PNameID>
+                    <PValue>SB01133</PValue>
+                </PayProfile>
+                <PayProfile>
+                    <PNameID>RcvTSPId</PNameID>
+                    <PValue>MB0000700543</PValue>
+                </PayProfile>
+                <PayProfile>
+                    <PNameID>SbpOperation</PNameID>
+                    <PValue>C2BQRD_Rcv</PValue>
+                </PayProfile>
+                <PayProfile>
+                    <PNameID>SbpOperType</PNameID>
+                    <PValue>C2BQRD</PValue>
+                </PayProfile>
+                <PayProfile>
+                    <PNameID>SndAccountNum</PNameID>
+                    <PValue>40817810510008408628</PValue>
+                </PayProfile>
+                <Funds>
+                    <Amount>29201</Amount>
+                    <Cur>810</Cur>
+                </Funds>
+            </ReqAuthPay>
+        </Payment>
+    </GCSvc>
+</Document>
