@@ -58,7 +58,6 @@ public class GcsvcHandler {
                         extraction = extractor.extract(body);
                     } catch (Exception e) {
                         log.error("Failed to parse XML", e);
-                        metrics.decrementActiveRequests();
                         return ServerResponse.badRequest()
                                 .contentType(MediaType.APPLICATION_XML)
                                 .bodyValue(errorResponseBuilder.buildErrorResponse(null, "Invalid XML: " + e.getMessage()));
@@ -75,12 +74,11 @@ public class GcsvcHandler {
 
                     metrics.recordRequest(extraction.requestType(), owner.name(), decision.upstreamName());
 
-                    Map<String, String> extraHeaders = new HashMap<>(extraction.fields());
+                    Map<String, String> extraHeaders = new HashMap<>(extraction.extraFields());
 
                     return proxyClient.forward(decision.upstreamName(), body, extraHeaders)
                             .flatMap(responseBody -> {
                                 metrics.stopTimer(timerSample, extraction.requestType(), decision.upstreamName());
-                                metrics.decrementActiveRequests();
                                 return ServerResponse.ok()
                                         .contentType(MediaType.APPLICATION_XML)
                                         .bodyValue(responseBody);
@@ -93,13 +91,13 @@ public class GcsvcHandler {
                                 metrics.recordUpstreamError(
                                         extraction.requestType(), decision.upstreamName(), ex.getClass().getSimpleName());
                                 metrics.stopTimer(timerSample, extraction.requestType(), decision.upstreamName());
-                                metrics.decrementActiveRequests();
                                 String errorXml = errorResponseBuilder.buildErrorResponse(
                                         extraction.requestType(), ex.getMessage());
                                 return ServerResponse.ok()
                                         .contentType(MediaType.APPLICATION_XML)
                                         .bodyValue(errorXml);
                             });
-                });
+                })
+                .doFinally(signal -> metrics.decrementActiveRequests());
     }
 }

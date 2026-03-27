@@ -57,8 +57,12 @@ class XmlFieldExtractorTest {
         assertThat(result.field("terminalName")).isEqualTo("PayTerminal01");
         assertThat(result.field("sbpOperType")).isEqualTo("B2C");
         assertThat(result.field("sbpOperation")).isEqualTo("B2COther_Snd");
-        assertThat(result.field("senderAccount")).isEqualTo("40702810820100004437");
-        assertThat(result.field("amount")).isEqualTo("15787");
+        // extra fields are in extraFields(), not fields()
+        assertThat(result.extraFields().get("senderAccount")).isEqualTo("40702810820100004437");
+        assertThat(result.extraFields().get("amount")).isEqualTo("15787");
+        // routing fields map should not contain extra fields
+        assertThat(result.fields()).doesNotContainKey("senderAccount");
+        assertThat(result.fields()).doesNotContainKey("amount");
     }
 
     @Test
@@ -81,7 +85,9 @@ class XmlFieldExtractorTest {
         assertThat(result.correlationId()).isEqualTo("test-b2c-notice-001");
         assertThat(result.field("terminalName")).isEqualTo("PayTerminal01");
         assertThat(result.field("state")).isEqualTo("0");
-        assertThat(result.field("bankOperId")).isEqualTo("671920591533");
+        // bankOperId is an extra field
+        assertThat(result.extraFields().get("bankOperId")).isEqualTo("671920591533");
+        assertThat(result.fields()).doesNotContainKey("bankOperId");
     }
 
     @Test
@@ -99,6 +105,7 @@ class XmlFieldExtractorTest {
         assertThat(result.requestType()).isNull();
         assertThat(result.correlationId()).isEqualTo("test-unknown-001");
         assertThat(result.fields()).isEmpty();
+        assertThat(result.extraFields()).isEmpty();
     }
 
     @Test

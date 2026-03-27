@@ -23,8 +23,8 @@ class SbpRouterPropertiesTest {
         assertThat(authRules.getRoutingFields().get(0).getName()).isEqualTo("terminalName");
         assertThat(authRules.getRoutingFields().get(0).isNamedBlock()).isTrue();
         var noticeRules = props.getExtractionRules().get("ReqNoticePay");
-        assertThat(noticeRules.getRoutingFields()).hasSize(4);
-        assertThat(noticeRules.getRoutingFields().get(3).getPath())
+        assertThat(noticeRules.getRoutingFields()).hasSize(5);
+        assertThat(noticeRules.getRoutingFields().get(4).getPath())
                 .isEqualTo("/Document/GCSvc/Payment/ReqNoticePay/State");
     }
 

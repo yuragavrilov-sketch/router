@@ -48,6 +48,9 @@ sbp-router:
         - name: sbpOperation
           parent: AdditionInfo
           key: SbpOperation
+        - name: sbpOperType
+          parent: AdditionInfo
+          key: SbpOperType
         - name: state
           path: /Document/GCSvc/Payment/ReqNoticePay/State
       extra-fields:
