@@ -1,6 +1,16 @@
 # Stage 1: Build
 FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
+
+# Import corporate CA certificates into Java truststore and OS trust
+COPY TCB-Root-CA.crt TCB-ENT-CA.crt /tmp/certs/
+RUN keytool -importcert -noprompt -trustcacerts \
+      -alias tcb-root-ca -file /tmp/certs/TCB-Root-CA.crt \
+      -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit && \
+    keytool -importcert -noprompt -trustcacerts \
+      -alias tcb-ent-ca -file /tmp/certs/TCB-ENT-CA.crt \
+      -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit
+
 COPY pom.xml .
 RUN mvn dependency:go-offline -q
 COPY src ./src

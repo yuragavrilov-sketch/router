@@ -1,4 +1,6 @@
 target/
+!TCB-Root-CA.crt
+!TCB-ENT-CA.crt
 .git/
 .gitignore
 .idea/

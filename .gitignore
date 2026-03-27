@@ -5,3 +5,7 @@ target/
 .idea/
 *.iml
 .vscode/
+
+# Corporate CA certificates (do not commit)
+TCB-Root-CA.crt
+TCB-ENT-CA.crt
