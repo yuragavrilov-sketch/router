@@ -2,18 +2,8 @@
 FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
 
-# Import corporate CA certificates into OS trust store and Java truststore
-COPY TCB-Root-CA.crt TCB-ENT-CA.crt /tmp/certs/
-RUN cp /tmp/certs/*.crt /usr/local/share/ca-certificates/ && \
-    update-ca-certificates && \
-    CACERTS=$(find $JAVA_HOME -name cacerts -type f 2>/dev/null | head -1) && \
-    echo "Found cacerts at: $CACERTS" && \
-    keytool -importcert -noprompt -trustcacerts \
-      -alias tcb-root-ca -file /tmp/certs/TCB-Root-CA.crt \
-      -keystore "$CACERTS" -storepass changeit && \
-    keytool -importcert -noprompt -trustcacerts \
-      -alias tcb-ent-ca -file /tmp/certs/TCB-ENT-CA.crt \
-      -keystore "$CACERTS" -storepass changeit
+# TODO: replace SSL skip with proper corporate CA certificates
+ENV MAVEN_OPTS="-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.resolver.transport=wagon"
 
 COPY pom.xml .
 RUN mvn dependency:go-offline -q
