@@ -15,7 +15,7 @@ public class GcsvcRouter {
     @Bean
     public RouterFunction<ServerResponse> gcsvcRoute(GcsvcHandler handler) {
         return RouterFunctions.route(
-                POST("/api/gcsvc").and(contentType(MediaType.APPLICATION_XML)),
+                POST("/api/gcsvc").and(contentType(MediaType.APPLICATION_XML, MediaType.APPLICATION_OCTET_STREAM)),
                 handler::handle);
     }
 }
