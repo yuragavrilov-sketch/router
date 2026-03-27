@@ -6,6 +6,13 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 30s
 
+logging:
+  level:
+    org.springframework.web.reactive.function.server.RequestPredicates: TRACE
+    org.springframework.web.reactive.result.method: DEBUG
+    org.springframework.http.server.reactive: DEBUG
+    reactor.netty.http.server: DEBUG
+
 management:
   endpoints:
     web:
