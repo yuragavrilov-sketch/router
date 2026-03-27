@@ -48,11 +48,22 @@ public class GcsvcHandler {
     }
 
     public Mono<ServerResponse> handle(ServerRequest request) {
+        log.info("Incoming request: method={} path={} contentType={} headers={}",
+                request.method(), request.path(),
+                request.headers().contentType().orElse(null),
+                request.headers().asHttpHeaders().toSingleValueMap());
+
         Timer.Sample timerSample = metrics.startTimer();
         metrics.incrementActiveRequests();
 
         return request.bodyToMono(byte[].class)
+                .switchIfEmpty(Mono.defer(() -> {
+                    log.warn("Empty request body received");
+                    return Mono.empty();
+                }))
                 .flatMap(body -> {
+                    log.debug("Request body size: {} bytes", body.length);
+
                     ExtractionResult extraction;
                     try {
                         extraction = extractor.extract(body);
@@ -61,6 +72,11 @@ public class GcsvcHandler {
                         return ServerResponse.badRequest()
                                 .contentType(MediaType.APPLICATION_XML)
                                 .bodyValue(errorResponseBuilder.buildErrorResponse(null, "Invalid XML: " + e.getMessage()));
+                    }
+
+                    if (extraction.requestType() == null) {
+                        log.warn("Unknown request type in XML, correlationId={}",
+                                extraction.correlationId());
                     }
 
                     TerminalOwner owner = terminalDetector.detect(extraction.fields());
@@ -78,6 +94,10 @@ public class GcsvcHandler {
 
                     return proxyClient.forward(decision.upstreamName(), body, extraHeaders)
                             .flatMap(responseBody -> {
+                                log.info("Upstream response received",
+                                        kv("correlationId", extraction.correlationId()),
+                                        kv("upstream", decision.upstreamName()),
+                                        kv("responseSize", responseBody.length));
                                 metrics.stopTimer(timerSample, extraction.requestType(), decision.upstreamName());
                                 return ServerResponse.ok()
                                         .contentType(MediaType.APPLICATION_XML)

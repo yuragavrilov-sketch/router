@@ -32,6 +32,9 @@ public class ProxyClient {
         int maxAttempts = config.getRetry() != null ? config.getRetry().getMaxAttempts() : 1;
         Duration backoff = config.getRetry() != null ? config.getRetry().getBackoff() : Duration.ofMillis(500);
 
+        log.info("Forwarding to upstream={} url={} bodySize={} timeout={}s",
+                upstreamName, config.getUrl(), body.length, timeout.getSeconds());
+
         var request = webClient.post().uri(config.getUrl()).contentType(MediaType.APPLICATION_XML);
         for (var entry : extraHeaders.entrySet()) {
             request = request.header("X-Sbp-" + entry.getKey(), entry.getValue());
