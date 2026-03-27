@@ -17,6 +17,7 @@ WORKDIR /app
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 COPY --from=build /app/target/sbp-router-*.jar app.jar
+RUN mkdir -p /app/config
 
 RUN chown -R appuser:appgroup /app
 USER appuser

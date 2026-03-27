@@ -1,0 +1,8 @@
+services:
+  sbp-router:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config/application.yml:/app/config/application.yml:ro
+    restart: unless-stopped
