@@ -86,5 +86,7 @@ sbp-router:
         backoff: 500ms
     stub-verification:
       url: http://localhost:${server.port}/stub/verification
+    stub-c2bqrd-verification:
+      url: http://localhost:${server.port}/stub/c2bqrd-verification
     stub-connector:
       url: http://localhost:${server.port}/stub/connector

@@ -91,6 +91,9 @@ public class GcsvcHandler {
                     metrics.recordRequest(extraction.requestType(), owner.name(), decision.upstreamName());
 
                     Map<String, String> extraHeaders = new HashMap<>(extraction.extraFields());
+                    if (extraction.correlationId() != null) {
+                        extraHeaders.put("correlationId", extraction.correlationId());
+                    }
 
                     return proxyClient.forward(decision.upstreamName(), body, extraHeaders)
                             .flatMap(responseBody -> {
